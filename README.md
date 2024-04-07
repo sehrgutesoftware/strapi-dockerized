@@ -50,6 +50,7 @@ services:
     volumes:
       - ./strapi/config:/opt/app/config
       - ./strapi/api:/opt/app/src/api
+      - ./strapi/components:/opt/app/src/components
       - ./.env:/opt/app/.env
     ports:
       - "1337:1337"
