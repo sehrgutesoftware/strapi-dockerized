@@ -48,7 +48,7 @@ services:
     #   NODE_ENV: development
     # command: ["npm", "run", "develop"]
     volumes:
-      - ./strapi/config:/opt/app/config
+      # - ./strapi/config:/opt/app/config # Before you use this, you need to copy the default `config` folder from github.com/sehrgutesoftware/strapi-dockerized
       - ./strapi/api:/opt/app/src/api
       - ./strapi/components:/opt/app/src/components
       - ./.env:/opt/app/.env
