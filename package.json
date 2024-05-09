@@ -1,12 +1,9 @@
 {
-  "name": "strapi-containerized",
-  "version": "0.1.0",
+  "name": "strapi-dockerized",
+  "version": "4.22.0",
   "private": true,
-  "description": "A Strapi application",
+  "description": "Strapi docker image",
   "license": "MIT",
-  "author": {
-    "name": "A Strapi developer"
-  },
   "scripts": {
     "build": "strapi build",
     "develop": "strapi develop",
@@ -18,18 +15,15 @@
     "@strapi/plugin-i18n": "4.22.0",
     "@strapi/plugin-users-permissions": "4.22.0",
     "@strapi/strapi": "4.22.0",
+    "@strapi/typescript-utils": "^4.24.2",
     "pg": "8.8.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "5.3.4",
     "styled-components": "5.3.3"
   },
-  "devDependencies": {},
   "engines": {
     "node": ">=18.0.0 <=20.x.x",
     "npm": ">=6.0.0"
-  },
-  "strapi": {
-    "uuid": "d39ae749-f6a2-41e7-b780-9e5cfc8d1ef3"
   }
 }
