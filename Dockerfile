@@ -1,30 +1,38 @@
 # -|----------------------------------------------------------------------------
-#  | Intermediate image for building the application.
+#  | Development image
 # -|----------------------------------------------------------------------------
-FROM node:20-alpine AS builder
+FROM node:20-alpine AS dev
 WORKDIR /app
+ENV NODE_ENV=development
 
 COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY tsconfig.json ./
-COPY src ./src
-RUN npm run build
+COPY public ./public
+
+ENV APP_KEYS="development - don't care"
+ENV JWT_SECRET="development - don't care"
+ENV ADMIN_JWT_SECRET="development - don't care"
+ENV API_TOKEN_SALT="development - don't care"
+
+ENTRYPOINT [ "npm", "run", "develop" ]
 
 # -|----------------------------------------------------------------------------
-#  | Final image containing only the files required to run in production.
+#  | Production base image
 # -|----------------------------------------------------------------------------
-FROM node:20-alpine AS production
+FROM node:20-alpine AS prod
+WORKDIR /app
+ENV NODE_ENV=production
+
 RUN apk add --no-cache vips-dev
 
 WORKDIR /app
+RUN chown node:node /app
 USER node
-ENV NODE_ENV=production
 
-COPY --from=builder --chown=node:node /app/package.json .
-COPY --from=builder --chown=node:node /app/dist dist
-COPY --from=builder --chown=node:node /app/node_modules node_modules
-COPY --chown=node:node public ./public
+COPY --from=dev --chown=node:node /app .
+COPY --chown=node:node server.js ./
 
 EXPOSE 1337
-ENTRYPOINT [ "npm", "run", "start" ]
+ENTRYPOINT [ "node", "server.js" ]
